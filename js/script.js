@@ -38,19 +38,18 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // timer
+    // timer (getTimeRemaining, endtime, getZiro, setClock, selector, endTime, updateClock)
 
-    const deadLine = '2021-01-05';
+    const deadLine = "2021-1-6";
 
-    function getTimeRemaining(endTime) {
-        const t = Date.parse(endTime) - Date.parse(new Date()),
+    function getTimeRemaining(endtime) {
+        const t = Date.parse(endtime) - Date.parse(new Date()),
               days = Math.floor(t / (1000 * 60 * 60 * 24)),
-              hours = Math.floor((t / (1000 * 60 * 60) % 24)),
-              minutes = Math.floor((t / (1000 * 60) % 60)),
+              hours = Math.floor((t / (1000 * 60 * 60)) % 24),
+              minutes = Math.floor((t / (1000 * 60)) % 60),
               seconds = Math.floor((t / 1000) % 60);
         
         return {
-            'total': t,
             'days': days,
             'hours': hours,
             'minutes': minutes,
@@ -60,37 +59,38 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function getZiro(num) {
         if(num >= 0 && num < 10) {
-            return `0${num}`;
-        } 
+            return '0' + num;
+        }
         else {
             return num;
         }
     }
 
-    function setClock(selector, endTime) {
+    function setClock(selector, endtime) {
         const timer = document.querySelector(selector),
-              days = timer.querySelector("#days"),
-              hours = timer.querySelector("#hours"),
-              minutes = timer.querySelector("#minutes"),
-              seconds = timer.querySelector("#seconds"),
-              timeInterval = setInterval(updateClock, 1000);
+              days = timer.querySelector('#days'),
+              hours = timer.querySelector('#hours'),
+              minutes = timer.querySelector('#minutes'),
+              seconds = timer.querySelector('#seconds'),
+              timerInterval = setInterval(updateClock);
 
         updateClock();
 
         function updateClock() {
-            const t = getTimeRemaining(endTime);
+            const t = getTimeRemaining(endtime);
 
             days.innerHTML = getZiro(t.days);
             hours.innerHTML = getZiro(t.hours);
             minutes.innerHTML = getZiro(t.minutes);
             seconds.innerHTML = getZiro(t.seconds);
 
-            if (t.total <= 0) {
-                clearInterval(timeInterval);
+            if(t.total <= 0) {
+                clearInterval(timerInterval);
             }
+
         }
     }
 
     setClock('.timer', deadLine);
-
+    
 });

@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // timer (getTimeRemaining, endtime, getZiro, setClock, selector, endTime, updateClock)
 
-    const deadLine = "2021-1-9";
+    const deadLine = "2021-1-12";
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -98,19 +98,23 @@ window.addEventListener('DOMContentLoaded', () => {
           modalWindow = document.querySelector('.modal'),
           modalBtnClose = document.querySelector('[data-close]');
 
-    btnModal.forEach((item) => {
-        item.addEventListener('click', () => {
-            modalWindow.classList.add('show');
-            modalWindow.classList.remove('hide');
-            document.body.style.overflow = 'hidden';
-        });
-    });
+    function openModalWindow() {
+        modalWindow.classList.add('show');
+        modalWindow.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalWindowTimerId);
+    }
 
     function closeModalWindow() {
         modalWindow.classList.remove('show');
         modalWindow.classList.add('hide');
         document.body.style.overflow = '';
     }
+
+    
+    btnModal.forEach((item) => {
+        item.addEventListener('click', openModalWindow);
+    });
 
     modalBtnClose.addEventListener('click', closeModalWindow);
 
@@ -125,5 +129,16 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModalWindow();
         }
     });
+
+    const modalWindowTimerId = setTimeout(openModalWindow, 15000);
     
+    function showModalByScroll() {
+        if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModalWindow();
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+    window.addEventListener('scroll', showModalByScroll);
+
 });

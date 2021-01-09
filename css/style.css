@@ -582,6 +582,9 @@ a {
   background-color: transparent;
   cursor: pointer;
 }
+.modal__close:hover {
+  transform: scale(1.2);
+}
 .modal__title {
   text-align: center;
   font-size: 22px;

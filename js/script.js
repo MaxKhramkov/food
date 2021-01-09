@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // timer (getTimeRemaining, endtime, getZiro, setClock, selector, endTime, updateClock)
 
-    const deadLine = "2021-1-6";
+    const deadLine = "2021-1-9";
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -92,5 +92,38 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setClock('.timer', deadLine);
+
+    // modal window
+
+    const btnModal = document.querySelectorAll('[data-modal]'),
+          modalWindow = document.querySelector('.modal'),
+          modalClose = document.querySelector('[data-close]');
+
+    btnModal.forEach((item) => {
+        item.addEventListener('click', () => {
+            modalWindow.classList.add('show');
+            modalWindow.classList.remove('hide');
+            document.body.style.overflow = 'hidden';
+        });
+    });
     
+    function closeModalWindow() {
+        modalWindow.classList.add('hide');
+        modalWindow.classList.remove('show');
+        document.body.style.overflow = '';        
+    }
+
+    modalClose.addEventListener('click', closeModalWindow);
+
+    modalWindow.addEventListener('click', (e) => {
+        if(e.target === modalWindow) {
+            closeModalWindow();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if(e.code === 'Escape' && modalWindow.classList.contains('show')) {
+            closeModalWindow();
+        }
+    });
 });

@@ -286,49 +286,49 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     // SLIDER
-
+   
     const slides = document.querySelectorAll('.offer__slide'),
-          prev = document.querySelector('.offer__slider-prev'),
-          next = document.querySelector('.offer__slider-next'),
-          total = document.querySelector('#total'),
-          current = document.querySelector('#current');
+          prev  = document.querySelector('.offer__slider-prev'),
+          next  = document.querySelector('.offer__slider-next'),
+          current  = document.querySelector('#current'),
+          total  = document.querySelector('#total');
     let slideIndex = 1;
+    showSlide(slideIndex);
 
-    showSlides(slideIndex);
-
-    if(slides.length < 10) {
+    if (slides.length < 10) {
         total.textContent = `0${slides.length}`;
-    } else{
+    } else {
         total.textContent = slides.length;
     }
 
-    function showSlides(n) {
+    function showSlide(n) {
         if (n > slides.length) {
             slideIndex = 1;
         }
-        if (n < 1) {
+        if(n < 1) {
             slideIndex = slides.length;
         }
-        slides.forEach(item => item.style.display = 'none');
-        slides[slideIndex - 1].style.display = 'block';
+        slides.forEach((item) => item.classList.add('hide'));
+        slides[slideIndex - 1].classList.remove('hide');
+        slides[slideIndex - 1].classList.add('show');
         
-        if(slides.length < 10) {
+        if (slides.length < 10) {
             current.textContent = `0${slideIndex}`;
-        } else{
+        } else {
             current.textContent = slideIndex;
         }
     }
 
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
+    function plusSlide(n) {
+        showSlide(slideIndex += n);
     }
 
     prev.addEventListener('click', () => {
-        plusSlides(-1);
+        plusSlide(-1);
     });
 
     next.addEventListener('click', () => {
-        plusSlides(1);
+        plusSlide(1);
     });
 
 
